@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def room_version = "2.2.6"
 
     implementation 'androidx.core:core-ktx:1.3.2'
@@ -70,6 +71,10 @@ dependencies {
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
     // END FOR ROOM
+
+    // FOR NAVIGATION
+    implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
+    // END FOR NAVIGATION
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
