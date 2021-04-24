@@ -32,7 +32,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             HandsOnKotlinTheme {
                 Surface(color = MaterialTheme.colors.background) {
-                    Column() {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text("TodoList Items")
+                        Spacer(modifier = Modifier.padding(bottom = 16.dp))
                         CustomCardState(itemViewModel)
                         Spacer(modifier = Modifier.padding(top = 32.dp))
                     }
