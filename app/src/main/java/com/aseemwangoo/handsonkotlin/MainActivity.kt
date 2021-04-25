@@ -109,9 +109,3 @@ fun CreateCustomCard(
 //fun PreviewCustomCard() {
 //    CreateCustomCard(title = "Dummy Item 1", false, {})
 //}
-
-
-@Composable
-fun AddView() {
-    Text(text = "Hey buddy")
-}

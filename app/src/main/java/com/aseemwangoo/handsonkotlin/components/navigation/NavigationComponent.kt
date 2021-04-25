@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.aseemwangoo.handsonkotlin.AddView
 import com.aseemwangoo.handsonkotlin.CheckedViewModel
 import com.aseemwangoo.handsonkotlin.HomeView
+import com.aseemwangoo.handsonkotlin.components.addTodo.AddView
 import com.aseemwangoo.handsonkotlin.ui.theme.HandsOnKotlinTheme
 
 @Composable
