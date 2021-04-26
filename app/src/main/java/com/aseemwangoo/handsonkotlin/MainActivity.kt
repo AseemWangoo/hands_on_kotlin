@@ -12,17 +12,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
@@ -34,25 +29,22 @@ import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var itemViewModel: CheckedViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        itemViewModel = CheckedViewModel()
         setContent {
-            NavigationComponent(itemViewModel)
+            NavigationComponent()
         }
 
-        itemViewModel.isDone.observe(this, { status ->
-            if (status) {
-                Toast.makeText(applicationContext, "I am selected", Toast.LENGTH_SHORT).show()
-            }
-        })
+//        itemViewModel.isDone.observe(this, { status ->
+//            if (status) {
+//                Toast.makeText(applicationContext, "I am selected", Toast.LENGTH_SHORT).show()
+//            }
+//        })
     }
 }
 
 @Composable
-fun HomeView(itemViewModel: CheckedViewModel, navController: NavController) {
+fun HomeView(navController: NavController) {
     val context = LocalContext.current
     val mTodoViewModel: TodoViewModel = viewModel(
         factory = TodoViewModelFactory(context.applicationContext as Application)
@@ -65,8 +57,8 @@ fun HomeView(itemViewModel: CheckedViewModel, navController: NavController) {
     ) {
         Text("My ToDo List")
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
-        CustomCardState(itemViewModel, navController, mTodoViewModel)
-        TodoList(list = items, mTodoViewModel = mTodoViewModel, itemViewModel)
+        CustomCardState(navController, mTodoViewModel)
+        TodoList(list = items, mTodoViewModel = mTodoViewModel)
         Spacer(modifier = Modifier.padding(top = 32.dp))
     }
 }
@@ -75,9 +67,9 @@ fun HomeView(itemViewModel: CheckedViewModel, navController: NavController) {
 @Composable
 fun TodoList(
     list: List<TodoItem>,
-    mTodoViewModel: TodoViewModel,
-    itemViewModel: CheckedViewModel
+    mTodoViewModel: TodoViewModel
 ) {
+    val context = LocalContext.current
 
     LazyColumn() {
         items(list) { todo ->
@@ -102,6 +94,8 @@ fun TodoList(
                             name.value = it
                             todo.isDone = name.value
                             mTodoViewModel.updateTodo(todo)
+
+                            Toast.makeText(context, "Updated todo!", Toast.LENGTH_SHORT).show()
                         },
                     )
                 }
@@ -111,33 +105,13 @@ fun TodoList(
     }
 }
 
-// Approach 4: ViewModel
-class CheckedViewModel : ViewModel() {
-    private val _isDone: MutableLiveData<Boolean> = MutableLiveData(false)
-    val isDone: LiveData<Boolean> = _isDone
-
-    fun onCheckboxChange(state: Boolean) {
-        _isDone.value = state
-    }
-}
-
 @Composable
 fun CustomCardState(
-    itemViewModel: CheckedViewModel,
     navController: NavController,
     mTodoViewModel: TodoViewModel
 ) {
-    val state: Boolean by itemViewModel.isDone.observeAsState(false)
-
     Column(
     ) {
-        CreateCustomCard(
-            title = "Dummy Item 1",
-            state
-        ) { itemViewModel.onCheckboxChange(it) }
-
-        Spacer(modifier = Modifier.padding(10.dp))
-
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -152,24 +126,35 @@ fun CustomCardState(
     }
 }
 
-@Composable
-fun CreateCustomCard(
-    title: String,
-    checkboxState: Boolean,
-    onCheckboxPressed: ((Boolean) -> Unit)?
-) {
-    Row(
-        modifier = Modifier.padding(4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Checkbox(
-            checked = checkboxState,
-            onCheckedChange = onCheckboxPressed,
-        )
-        Spacer(modifier = Modifier.padding(end = 4.dp))
-        Text(text = title)
-    }
-}
+
+// Approach 4: ViewModel
+//class CheckedViewModel : ViewModel() {
+//    private val _isDone: MutableLiveData<Boolean> = MutableLiveData(false)
+//    val isDone: LiveData<Boolean> = _isDone
+//
+//    fun onCheckboxChange(state: Boolean) {
+//        _isDone.value = state
+//    }
+//}
+
+//@Composable
+//fun CreateCustomCard(
+//    title: String,
+//    checkboxState: Boolean,
+//    onCheckboxPressed: ((Boolean) -> Unit)?
+//) {
+//    Row(
+//        modifier = Modifier.padding(4.dp),
+//        verticalAlignment = Alignment.CenterVertically
+//    ) {
+//        Checkbox(
+//            checked = checkboxState,
+//            onCheckedChange = onCheckboxPressed,
+//        )
+//        Spacer(modifier = Modifier.padding(end = 4.dp))
+//        Text(text = title)
+//    }
+//}
 //
 //@Preview(showBackground = true)
 //@Composable
