@@ -61,9 +61,9 @@ fun HomeView(itemViewModel: CheckedViewModel, navController: NavController) {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
-        Text("TodoList Items")
+        Text("My ToDo List")
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
-        CustomCardState(itemViewModel, navController)
+        CustomCardState(itemViewModel, navController, mTodoViewModel)
         TodoList(list = items, mTodoViewModel = mTodoViewModel)
         Spacer(modifier = Modifier.padding(top = 32.dp))
     }
@@ -111,7 +111,11 @@ class CheckedViewModel : ViewModel() {
 }
 
 @Composable
-fun CustomCardState(itemViewModel: CheckedViewModel, navController: NavController) {
+fun CustomCardState(
+    itemViewModel: CheckedViewModel,
+    navController: NavController,
+    mTodoViewModel: TodoViewModel
+) {
     val state: Boolean by itemViewModel.isDone.observeAsState(false)
 
     Column(
@@ -130,7 +134,7 @@ fun CustomCardState(itemViewModel: CheckedViewModel, navController: NavControlle
             Button(onClick = { navController.navigate(Destinations.AddTodo) }) {
                 Text(text = "Ådd Todo")
             }
-            Button(onClick = { }) {
+            Button(onClick = { mTodoViewModel.deleteAllTodos() }) {
                 Text(text = "Clear all")
             }
         }
