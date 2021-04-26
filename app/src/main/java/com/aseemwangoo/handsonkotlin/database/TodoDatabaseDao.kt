@@ -15,8 +15,11 @@ interface TodoDatabaseDao {
     suspend fun insert(item:TodoItem)
 
     @Update
-    fun update(item:TodoItem)
+    suspend fun update(item:TodoItem)
 
     @Delete
-    fun delete(item:TodoItem)
+    suspend fun delete(item:TodoItem)
+
+    @Query("DELETE FROM my_todo_list")
+    suspend fun deleteAllTodos()
 }

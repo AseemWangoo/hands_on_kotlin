@@ -2,19 +2,15 @@ package com.aseemwangoo.handsonkotlin
 
 import android.app.Application
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -37,7 +33,6 @@ import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
 class MainActivity : ComponentActivity() {
 
     private lateinit var itemViewModel: CheckedViewModel
-    private lateinit var mTodoViewModel: TodoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,28 +64,34 @@ fun HomeView(itemViewModel: CheckedViewModel, navController: NavController) {
         Text("TodoList Items")
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
         CustomCardState(itemViewModel, navController)
-        TodoList(list = items)
+        TodoList(list = items, mTodoViewModel = mTodoViewModel)
         Spacer(modifier = Modifier.padding(top = 32.dp))
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TodoList(list: List<TodoItem>) {
+fun TodoList(list: List<TodoItem>, mTodoViewModel: TodoViewModel) {
     LazyColumn() {
         items(list) { todo ->
             ListItem(
                 text = { Text(text = todo.itemName) },
                 icon = {
-                    Icon(
-                        Icons.Default.Info,
-                        contentDescription = null
-                    )
+                    IconButton(onClick = {
+                        mTodoViewModel.deleteTodo(todo)
+                    }) {
+                        Icon(
+                            Icons.Default.Delete,
+                            contentDescription = null
+                        )
+                    }
                 },
                 trailing = {
                     Checkbox(
                         checked = todo.isDone,
-                        onCheckedChange = {  },
+                        onCheckedChange = {
+
+                        },
                     )
                 }
             )
@@ -121,8 +122,17 @@ fun CustomCardState(itemViewModel: CheckedViewModel, navController: NavControlle
         ) { itemViewModel.onCheckboxChange(it) }
 
         Spacer(modifier = Modifier.padding(10.dp))
-        Button(onClick = { navController.navigate(Destinations.AddTodo) }) {
-            Text(text = "Ådd Todo")
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Button(onClick = { navController.navigate(Destinations.AddTodo) }) {
+                Text(text = "Ådd Todo")
+            }
+            Button(onClick = { }) {
+                Text(text = "Clear all")
+            }
         }
     }
 }

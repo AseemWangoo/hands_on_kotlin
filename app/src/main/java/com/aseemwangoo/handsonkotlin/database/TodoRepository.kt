@@ -9,4 +9,16 @@ class TodoRepository(private val todoDatabaseDao: TodoDatabaseDao) {
     suspend fun addTodo(todoItem: TodoItem) {
         todoDatabaseDao.insert(todoItem)
     }
+
+    suspend fun updateTodo(todoItem: TodoItem) {
+        todoDatabaseDao.update(todoItem)
+    }
+
+    suspend fun deleteTodo(todoItem: TodoItem) {
+        todoDatabaseDao.delete(todoItem)
+    }
+
+    suspend fun deleteAllTodos() {
+        todoDatabaseDao.deleteAllTodos()
+    }
 }
