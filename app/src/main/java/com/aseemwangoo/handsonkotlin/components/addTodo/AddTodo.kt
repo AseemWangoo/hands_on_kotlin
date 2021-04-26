@@ -1,7 +1,6 @@
 package com.aseemwangoo.handsonkotlin.components.addTodo
 
 import android.app.Application
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -18,12 +17,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.navigate
+import com.aseemwangoo.handsonkotlin.components.navigation.Destinations
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
 
 @Composable
-fun AddView() {
+fun AddView(navController: NavController) {
     val inputViewModel = InputViewModel()
     val context = LocalContext.current
     val mTodoViewModel: TodoViewModel = viewModel(
@@ -33,8 +35,10 @@ fun AddView() {
     Scaffold(
         floatingActionButton = {
             ExtendedFAB {
-                Log.i(">>>>", "${inputViewModel.todo.value}")
                 insertTodoInDB(inputViewModel.todo.value.toString(), mTodoViewModel)
+
+                Toast.makeText(context, "Added Todo", Toast.LENGTH_SHORT).show()
+                navController.navigate(Destinations.Home)
             }
         }
     ) {
@@ -79,7 +83,7 @@ fun ExtendedFAB(onClick: () -> Unit) {
 }
 
 fun insertTodoInDB(todo: String, mTodoViewModel: TodoViewModel) {
-    if(todo.isNotEmpty()) {
+    if (todo.isNotEmpty()) {
         val todoItem = TodoItem(
             itemName = todo,
             isDone = false

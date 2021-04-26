@@ -16,7 +16,7 @@ fun NavigationComponent(itemViewModel: CheckedViewModel) {
     HandsOnKotlinTheme {
         NavHost(navController = navController, startDestination = Destinations.Home) {
             composable(Destinations.Home) { HomeView(itemViewModel, navController) }
-            composable(Destinations.AddTodo) { AddView() }
+            composable(Destinations.AddTodo) { AddView(navController) }
         }
     }
 }
