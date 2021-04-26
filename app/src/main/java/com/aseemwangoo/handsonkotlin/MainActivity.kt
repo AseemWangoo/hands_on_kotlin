@@ -14,6 +14,8 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -64,16 +66,23 @@ fun HomeView(itemViewModel: CheckedViewModel, navController: NavController) {
         Text("My ToDo List")
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
         CustomCardState(itemViewModel, navController, mTodoViewModel)
-        TodoList(list = items, mTodoViewModel = mTodoViewModel)
+        TodoList(list = items, mTodoViewModel = mTodoViewModel, itemViewModel)
         Spacer(modifier = Modifier.padding(top = 32.dp))
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun TodoList(list: List<TodoItem>, mTodoViewModel: TodoViewModel) {
+fun TodoList(
+    list: List<TodoItem>,
+    mTodoViewModel: TodoViewModel,
+    itemViewModel: CheckedViewModel
+) {
+
     LazyColumn() {
         items(list) { todo ->
+            val name = rememberSaveable { mutableStateOf(todo.isDone) }
+
             ListItem(
                 text = { Text(text = todo.itemName) },
                 icon = {
@@ -88,9 +97,11 @@ fun TodoList(list: List<TodoItem>, mTodoViewModel: TodoViewModel) {
                 },
                 trailing = {
                     Checkbox(
-                        checked = todo.isDone,
+                        checked = name.value,
                         onCheckedChange = {
-
+                            name.value = it
+                            todo.isDone = name.value
+                            mTodoViewModel.updateTodo(todo)
                         },
                     )
                 }
