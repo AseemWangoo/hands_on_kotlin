@@ -1,6 +1,8 @@
 package com.aseemwangoo.handsonkotlin.components.addTodo
 
+import android.app.Application
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,26 +12,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.aseemwangoo.handsonkotlin.database.TodoItem
+import com.aseemwangoo.handsonkotlin.database.TodoViewModel
+import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
 
 @Composable
 fun AddView() {
+    val inputViewModel = InputViewModel()
+    val context = LocalContext.current
+    val mTodoViewModel: TodoViewModel = viewModel(
+        factory = TodoViewModelFactory(context.applicationContext as Application)
+    )
+
     Scaffold(
         floatingActionButton = {
             ExtendedFAB {
-                Log.i(">>>>","sfdsdfdsfdsfdsfdsfds")
+                Log.i(">>>>", "${inputViewModel.todo.value}")
+                insertTodoInDB(inputViewModel.todo.value.toString(), mTodoViewModel)
             }
         }
     ) {
-        InputFieldState()
+        InputFieldState(inputViewModel)
     }
 }
 
 @Composable
-fun InputFieldState(inputViewModel: InputViewModel = InputViewModel()) {
+fun InputFieldState(inputViewModel: InputViewModel) {
     val todo: String by inputViewModel.todo.observeAsState("")
 
     Column(modifier = Modifier.padding(16.dp)) {
@@ -62,6 +76,17 @@ fun ExtendedFAB(onClick: () -> Unit) {
         onClick = onClick,
         elevation = FloatingActionButtonDefaults.elevation(8.dp)
     )
+}
+
+fun insertTodoInDB(todo: String, mTodoViewModel: TodoViewModel) {
+    if(todo.isNotEmpty()) {
+        val todoItem = TodoItem(
+            itemName = todo,
+            isDone = false
+        )
+
+        mTodoViewModel.addTodo(todoItem)
+    }
 }
 
 class InputViewModel : ViewModel() {

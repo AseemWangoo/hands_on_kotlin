@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 data class TodoItem(
 
     @PrimaryKey(autoGenerate = true)
-    var itemId: Int,
+    var itemId: Long = 0L,
 
     @ColumnInfo(name = "item_name")
     val itemName: String,
