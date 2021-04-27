@@ -40,9 +40,9 @@ class TodoDatabaseTest {
     @Test
     @Throws(Exception::class)
     fun insertAndGetTodo() = runBlocking {
-        val todoItem = TodoItem(itemId = 1, itemName = "Dummy Item", isDone = false)
+        val todoItem = TodoItem(itemName = "Dummy Item", isDone = false)
         todoDao.insert(todoItem)
         val oneItem = todoDao.getById(1)
-        assertEquals(oneItem?.itemId, 1)
+        assertEquals(oneItem?.itemId, 1L)
     }
 }
