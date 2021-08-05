@@ -15,4 +15,13 @@ const val VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION =
 
 
 const val KEY_ONDEMANDWORKER_RESP = "KEY_ONDEMANDWORKER_RESP"
+const val KEY_FILEWORKER_RESP = "KEY_FILEWORKER_RESP"
 
+const val ONDEMAND_BACKUP_WORK_NAME = "on_demand_backup_work"
+
+const val OUTPUT_PATH = "my_app_backups"
+
+const val BACKUP_FILE_NAME = "backup_data.txt"
+
+const val TAG_BACKUP = "TAG_BACKUP"
+const val TAG_FILE = "TAG_FILE"

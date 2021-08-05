@@ -5,11 +5,16 @@ package com.aseemwangoo.handsonkotlin.workers
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.aseemwangoo.handsonkotlin.*
 import timber.log.Timber
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
 
 fun sleep() {
     try {
@@ -44,4 +49,29 @@ fun showNotifications(message: String, ctx: Context) {
 
     // Show notification
     NotificationManagerCompat.from(ctx).notify(NOTIFICATION_ID, builder.build())
+}
+
+@Throws(FileNotFoundException::class)
+fun saveToFile(applicationContext: Context, content: String): Uri {
+    val outputDir = File(applicationContext.filesDir, OUTPUT_PATH)
+    if (!outputDir.exists()) {
+        outputDir.mkdirs()
+    }
+    val outputFile = File(outputDir, BACKUP_FILE_NAME)
+    var out: FileOutputStream? = null
+
+    try {
+        out = FileOutputStream(outputFile)
+        outputFile.appendText(content)
+    } finally {
+        out?.let {
+            try {
+                it.close()
+            } catch (ignore: IOException) {
+            }
+
+        }
+    }
+
+    return Uri.fromFile(outputFile)
 }
