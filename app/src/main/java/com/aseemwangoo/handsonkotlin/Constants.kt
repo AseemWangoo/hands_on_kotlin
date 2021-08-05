@@ -5,7 +5,7 @@ package com.aseemwangoo.handsonkotlin
 const val DELAY_TIME_MILLIS: Long = 3000
 const val CHANNEL_ID = "VERBOSE_NOTIFICATION"
 
-@JvmField val NOTIFICATION_TITLE: CharSequence = "WorkRequest Starting"
+@JvmField val NOTIFICATION_TITLE: CharSequence = "WorkRequest - OnDemandBackup"
 const val NOTIFICATION_ID = 1
 
 @JvmField val VERBOSE_NOTIFICATION_CHANNEL_NAME: CharSequence =

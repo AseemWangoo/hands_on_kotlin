@@ -15,17 +15,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Observer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
+import androidx.work.WorkInfo
+import com.aseemwangoo.handsonkotlin.components.backUpBtn.BackUpButton
 import com.aseemwangoo.handsonkotlin.components.navigation.Destinations
 import com.aseemwangoo.handsonkotlin.components.navigation.NavigationComponent
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
+import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModel
+import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModelFactory
+import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
 
@@ -50,7 +58,14 @@ fun HomeView(navController: NavController) {
         factory = TodoViewModelFactory(context.applicationContext as Application)
     )
 
+    val mBackUpViewModel: OnDemandBackupViewModel = viewModel(
+        factory = OnDemandBackupViewModelFactory(context.applicationContext as Application)
+    )
+
     val items = mTodoViewModel.readAllData.observeAsState(listOf()).value
+
+    val listOfWorkInfo = mBackUpViewModel.backupDataInfo.observeAsState(listOf()).value
+    backupDataInfoObserver(listOfWorkInfo)
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -60,6 +75,7 @@ fun HomeView(navController: NavController) {
         CustomCardState(navController, mTodoViewModel)
         TodoList(list = items, mTodoViewModel = mTodoViewModel)
         Spacer(modifier = Modifier.padding(top = 32.dp))
+        BackUpButton(mBackUpViewModel)
     }
 }
 
@@ -126,7 +142,6 @@ fun CustomCardState(
     }
 }
 
-
 // Approach 4: ViewModel
 //class CheckedViewModel : ViewModel() {
 //    private val _isDone: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -137,27 +152,15 @@ fun CustomCardState(
 //    }
 //}
 
-//@Composable
-//fun CreateCustomCard(
-//    title: String,
-//    checkboxState: Boolean,
-//    onCheckboxPressed: ((Boolean) -> Unit)?
-//) {
-//    Row(
-//        modifier = Modifier.padding(4.dp),
-//        verticalAlignment = Alignment.CenterVertically
-//    ) {
-//        Checkbox(
-//            checked = checkboxState,
-//            onCheckedChange = onCheckboxPressed,
-//        )
-//        Spacer(modifier = Modifier.padding(end = 4.dp))
-//        Text(text = title)
-//    }
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun PreviewCustomCard() {
-//    CreateCustomCard(title = "Dummy Item 1", false, {})
-//}
+private fun backupDataInfoObserver(listOfWorkInfo: List<WorkInfo>) {
+    if (listOfWorkInfo.isNotEmpty()) {
+        val workInfo = listOfWorkInfo[0]
+
+        if (workInfo.state.isFinished) {
+            Timber.d("I AM FINISHED")
+        } else {
+            Timber.d("I AM IN PROGRESS")
+        }
+    }
+}
+

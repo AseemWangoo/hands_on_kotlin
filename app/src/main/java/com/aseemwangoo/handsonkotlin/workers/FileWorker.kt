@@ -23,7 +23,7 @@ class FileWorker(ctx: Context, workerParams: WorkerParameters) :
         sleep()
 
         return try {
-            val content = String.format("Backed up on ", dateFormatter)
+            val content = "Backed up on ${dateFormatter.format(Date())}.\n"
 
             val outputUri = saveToFile(appContext, content)
             val data = workDataOf(KEY_FILEWORKER_RESP to outputUri.toString())
