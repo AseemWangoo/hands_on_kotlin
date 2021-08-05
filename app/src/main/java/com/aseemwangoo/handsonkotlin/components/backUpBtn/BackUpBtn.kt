@@ -22,5 +22,10 @@ fun BackUpButton(
             Text(text = "Backup Now")
         }
         Spacer(modifier = Modifier.padding(end = 4.dp))
+        Button(onClick = {
+            mBackUpViewModel.cancelBackup()
+        }) {
+            Text(text = "Cancel Backup")
+        }
     }
 }

@@ -57,7 +57,7 @@ class OnDemandBackupViewModel(application: Application) : AndroidViewModel(appli
     /**
      * Cancel the WorkRequest
      */
-    internal fun cancelWork() {
+    internal fun cancelBackup() {
         workManager.cancelUniqueWork(ONDEMAND_BACKUP_WORK_NAME)
     }
  }

@@ -156,8 +156,10 @@ private fun backupDataInfoObserver(listOfWorkInfo: List<WorkInfo>) {
     if (listOfWorkInfo.isNotEmpty()) {
         val workInfo = listOfWorkInfo[0]
 
-        if (workInfo.state.isFinished) {
-            Timber.d("I AM FINISHED")
+        if (workInfo.state == WorkInfo.State.SUCCEEDED) {
+            Timber.d("✅ ✅ ✅ I AM FINISHED")
+        } else if (workInfo.state == WorkInfo.State.CANCELLED) {
+            Timber.d("❌ ❌ ❌ I AM CANCELLED")
         } else {
             Timber.d("I AM IN PROGRESS")
         }
