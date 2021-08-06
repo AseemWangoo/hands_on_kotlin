@@ -21,7 +21,7 @@ class TodoApplication() : Application(), Configuration.Provider {
             .setRequiredNetworkType(NetworkType.UNMETERED)
             .build()
 
-        val periodicBackup = PeriodicWorkRequestBuilder<PeriodicBackupWorker>(15, TimeUnit.MINUTES)
+        val periodicBackup = PeriodicWorkRequestBuilder<PeriodicBackupWorker>(1, TimeUnit.DAYS)
             .addTag(TAG_PERIODIC_BACKUP)
             .setConstraints(constraints)
             .build()
