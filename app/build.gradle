@@ -97,6 +97,7 @@ dependencies {
 
     // FOR LOGGING
     implementation "com.jakewharton.timber:timber:4.7.1"
+    androidTestImplementation "androidx.work:work-testing:$work_version"
     // END FOR LOGGING
 
     testImplementation 'junit:junit:4.+'
