@@ -53,6 +53,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def room_version = "2.2.6"
     def nav_version = "2.3.5"
+    def work_version = "2.5.0"
 
     implementation 'androidx.core:core-ktx:1.3.2'
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -89,6 +90,15 @@ dependencies {
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha10"
     // END FOR NAVIGATION
+
+    // FOR WORK MANAGER
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    androidTestImplementation "androidx.work:work-testing:$work_version"
+    // END FOR WORK MANAGER
+
+    // FOR LOGGING
+    implementation "com.jakewharton.timber:timber:4.7.1"
+    // END FOR LOGGING
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

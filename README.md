@@ -21,11 +21,20 @@ This sample contains 2 screens: a list of todos, where the user can view their t
 
 Uses Room to save todos, locally.
 
+- https://levelup.gitconnected.com/using-room-in-jetpack-compose-d2b6b674d3a5
+
 ### ViewModel
 
 Uses ViewModel to manage state and display the changes in the todos instantly
 
+- https://levelup.gitconnected.com/using-state-in-jetpack-compose-b7445b697736
+
 ### Navigation
 
 Uses navigation composable for navigating between screens
+
+### WorkManager
+
+Backup on demand and periodic backup
+
 
