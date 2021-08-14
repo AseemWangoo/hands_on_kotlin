@@ -1,13 +1,11 @@
 package com.aseemwangoo.handsonkotlin.compose
 
-import androidx.compose.ui.test.assertHasNoClickAction
-import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithText
-import androidx.compose.ui.test.performClick
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
-import com.aseemwangoo.handsonkotlin.HomeView
+import androidx.test.espresso.Espresso
+import com.aseemwangoo.handsonkotlin.*
 import com.aseemwangoo.handsonkotlin.components.addTodo.AddView
 import com.aseemwangoo.handsonkotlin.components.navigation.NavigationComponent
 import org.junit.Before
@@ -32,9 +30,8 @@ class TodoComposeTest {
             HomeView(navController)
         }
 
-        composeTestRule.onNodeWithText("My ToDo List")
+        composeTestRule.onNodeWithText(TITLE_MAIN)
             .assertIsDisplayed()
-
     }
 
     @Test
@@ -43,7 +40,7 @@ class TodoComposeTest {
             HomeView(navController)
         }
 
-        composeTestRule.onNodeWithText("My ToDo List")
+        composeTestRule.onNodeWithText(TITLE_MAIN)
             .assertHasNoClickAction()
 
     }
@@ -54,12 +51,31 @@ class TodoComposeTest {
             NavigationComponent()
         }
 
-        composeTestRule.onNodeWithText("Add Todo")
+        composeTestRule.onNodeWithText(ADD_TODO)
             .performClick()
 
         composeTestRule.onNodeWithText(
-            text = "Save Todo"
+            text = SAVE_TODO
         ).assertExists()
+    }
+
+    @Test
+    fun testForNotSavingTodo() {
+        composeTestRule.setContent {
+            NavigationComponent()
+        }
+
+        composeTestRule.onNodeWithText(ADD_TODO)
+            .performClick()
+
+        composeTestRule.onNodeWithText(
+            text = SAVE_TODO
+        ).assertExists()
+
+        Espresso.pressBack()
+
+        composeTestRule.onNodeWithText(TITLE_MAIN)
+            .assertExists()
     }
 
     @Test
@@ -67,9 +83,10 @@ class TodoComposeTest {
         composeTestRule.setContent {
             AddView(navController)
         }
+        val dummyText = "Dummy Text"
 
-        composeTestRule.onNodeWithText(
-            text = "Save Todo"
-        ).assertExists()
+        composeTestRule.onNodeWithTag(TEST_INPUT_TAG).performTextInput(dummyText)
+
+        composeTestRule.onNodeWithTag(TEST_INPUT_TAG).assertTextEquals(dummyText)
     }
 }

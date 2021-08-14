@@ -28,3 +28,9 @@ const val BACKUP_FILE_NAME = "backup_data.txt"
 const val TAG_BACKUP = "TAG_BACKUP"
 const val TAG_FILE = "TAG_FILE"
 const val TAG_PERIODIC_BACKUP = "TAG_PERIODIC_BACKUP"
+
+const val TEST_INPUT_TAG = "InputTodo Tag"
+const val TITLE_MAIN = "My ToDo List"
+const val ADD_TODO = "Add Todo"
+const val SAVE_TODO = "Save Todo"
+

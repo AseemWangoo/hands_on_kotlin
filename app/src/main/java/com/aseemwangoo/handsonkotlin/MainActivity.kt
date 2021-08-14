@@ -70,7 +70,7 @@ fun HomeView(navController: NavController) {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
-        Text("My ToDo List")
+        Text(TITLE_MAIN)
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
         CustomCardState(navController, mTodoViewModel)
         TodoList(list = items, mTodoViewModel = mTodoViewModel)
@@ -133,7 +133,7 @@ fun CustomCardState(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Button(onClick = { navController.navigate(Destinations.AddTodo) }) {
-                Text(text = "Add Todo")
+                Text(text = ADD_TODO)
             }
             Button(onClick = { mTodoViewModel.deleteAllTodos() }) {
                 Text(text = "Clear all")
