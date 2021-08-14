@@ -133,7 +133,7 @@ fun CustomCardState(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Button(onClick = { navController.navigate(Destinations.AddTodo) }) {
-                Text(text = "Ådd Todo")
+                Text(text = "Add Todo")
             }
             Button(onClick = { mTodoViewModel.deleteAllTodos() }) {
                 Text(text = "Clear all")
