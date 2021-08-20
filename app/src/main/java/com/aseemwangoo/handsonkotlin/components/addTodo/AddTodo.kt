@@ -14,6 +14,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,6 +22,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
+import com.aseemwangoo.handsonkotlin.SAVE_TODO
+import com.aseemwangoo.handsonkotlin.TEST_INPUT_TAG
 import com.aseemwangoo.handsonkotlin.components.navigation.Destinations
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
@@ -71,7 +74,8 @@ fun InputField(
             placeholder = { Text(text = "Enter todo") },
             modifier = Modifier
                 .padding(all = 16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .testTag(TEST_INPUT_TAG),
             onValueChange = onValChange,
             singleLine = true,
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
@@ -82,7 +86,7 @@ fun InputField(
 @Composable
 fun ExtendedFAB(onClick: () -> Unit) {
     ExtendedFloatingActionButton(
-        text = { Text("Save Todo") },
+        text = { Text(SAVE_TODO) },
         onClick = onClick,
         elevation = FloatingActionButtonDefaults.elevation(8.dp)
     )
