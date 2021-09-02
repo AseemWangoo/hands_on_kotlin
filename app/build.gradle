@@ -100,6 +100,10 @@ dependencies {
     implementation "com.jakewharton.timber:timber:4.7.1"
     // END FOR LOGGING
 
+    // SIGN IN WITH GOOGLE
+    implementation 'com.google.android.gms:play-services-auth:19.2.0'
+    // END FOR SIGN IN WITH GOOGLE
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
