@@ -7,10 +7,10 @@ import androidx.activity.result.contract.ActivityResultContract
 import com.aseemwangoo.handsonkotlin.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.tasks.Task
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Task
 
-class GoogleApiContract: ActivityResultContract<Int, Task<GoogleSignInAccount>>() {
+class GoogleApiContract: ActivityResultContract<Int, Task<GoogleSignInAccount>?>() {
     override fun createIntent(context: Context, input: Int?): Intent {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(context.getString(R.string.google_cloud_server_client_id))

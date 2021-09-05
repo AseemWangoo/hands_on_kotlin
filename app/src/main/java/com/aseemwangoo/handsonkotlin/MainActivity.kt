@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,9 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Observer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
@@ -28,11 +27,14 @@ import androidx.work.WorkInfo
 import com.aseemwangoo.handsonkotlin.components.backUpBtn.BackUpButton
 import com.aseemwangoo.handsonkotlin.components.navigation.Destinations
 import com.aseemwangoo.handsonkotlin.components.navigation.NavigationComponent
+import com.aseemwangoo.handsonkotlin.components.signingoogle.SignInGoogleButton
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
+import com.aseemwangoo.handsonkotlin.google.*
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModel
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModelFactory
+import com.google.android.gms.common.api.ApiException
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
@@ -48,6 +50,76 @@ class MainActivity : ComponentActivity() {
 //                Toast.makeText(applicationContext, "I am selected", Toast.LENGTH_SHORT).show()
 //            }
 //        })
+    }
+}
+
+@Composable
+fun AuthScreen() {
+    val signInRequestCode = 1
+    val mSignInViewModel: SignInGoogleViewModel = viewModel(
+        factory = SignInGoogleViewModelFactory()
+    )
+
+    val authResultLauncher =
+        rememberLauncherForActivityResult(contract = GoogleApiContract()) { task ->
+            try {
+                val gsa = task?.getResult(ApiException::class.java)
+
+                if (gsa != null) {
+                    mSignInViewModel.fetchSignInUser(gsa.email, gsa.displayName)
+                }
+            } catch(e: ApiException) {
+                Timber.d("Error in AuthScreen%s", e.toString())
+            }
+        }
+
+    AuthView(onClick = { authResultLauncher.launch(signInRequestCode) })
+
+//    mSignInViewModel.googleUser.value?.let { AuthView(state = it) }
+}
+
+@Composable
+fun AuthView(
+    onClick: () -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        SignInGoogleButton(
+            onClick = {
+                onClick()
+            },
+            isLoading = false
+        )
+    }
+//    if (state.showLoading) {
+//        FullScreenLoader()
+//    } else {
+//        Column(
+//            modifier = Modifier.fillMaxSize(),
+//            verticalArrangement = Arrangement.Center,
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//        ) {
+//            SignInGoogleButton(
+//                onClick = {
+//
+//                },
+//                isLoading = true
+//            )
+//        }
+//    }
+}
+
+@Composable
+private fun FullScreenLoader() {
+    Box(modifier = Modifier.fillMaxSize()) {
+        CircularProgressIndicator(
+            modifier = Modifier
+                .wrapContentSize()
+                .align(Alignment.Center)
+        )
     }
 }
 

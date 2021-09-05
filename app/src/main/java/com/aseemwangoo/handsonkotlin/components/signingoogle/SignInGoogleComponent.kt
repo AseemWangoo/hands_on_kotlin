@@ -2,6 +2,7 @@ package com.aseemwangoo.handsonkotlin.components.signingoogle
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -26,7 +27,9 @@ fun SignInGoogleButton(
         modifier = Modifier.clickable(
             enabled = !isLoading,
             onClick = onClick
-        )
+        ),
+        border = BorderStroke(width = 1.dp, color = Color.LightGray),
+        color = MaterialTheme.colors.surface
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
