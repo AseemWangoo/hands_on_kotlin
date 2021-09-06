@@ -96,58 +96,34 @@ fun AuthView(
 ) {
     val isLoading = rememberSaveable { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        SignInGoogleButton(
-            onClick = {
-                isLoading.value = true
-                onClick()
-            },
-        )
+    Scaffold {
+        if(isLoading.value && !isError) {
+            FullScreenLoader()
+        } else {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                SignInGoogleButton(
+                    onClick = {
+                        isLoading.value = true
+                        onClick()
+                    },
+                )
 
-        when {
-            isError -> {
-                isError.let {
-                    isLoading.value = false
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Text("Something went wrong...")
+                when {
+                    isError -> {
+                        isError.let {
+                            isLoading.value = false
+                            Spacer(modifier = Modifier.height(20.dp))
+                            Text("Something went wrong...")
+                        }
+                    }
                 }
             }
         }
     }
-
-//    Scaffold() {
-//        if(isLoading.value) {
-//            FullScreenLoader()
-//        } else {
-//            Column(
-//                modifier = Modifier.fillMaxSize(),
-//                verticalArrangement = Arrangement.Center,
-//                horizontalAlignment = Alignment.CenterHorizontally,
-//            ) {
-//                SignInGoogleButton(
-//                    onClick = {
-//                        isLoading.value = true
-//                        onClick()
-//                    },
-//                )
-//
-//                when {
-//                    isError -> {
-//                        isError.let {
-//                            isLoading.value = false
-//                            Spacer(modifier = Modifier.height(20.dp))
-//                            Text("Something went wrong...")
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
 }
 
 @Composable
