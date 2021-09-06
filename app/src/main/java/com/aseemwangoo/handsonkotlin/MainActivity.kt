@@ -58,8 +58,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AuthScreen(navController: NavController) {
     val signInRequestCode = 1
+    val context = LocalContext.current
+
     val mSignInViewModel: SignInGoogleViewModel = viewModel(
-        factory = SignInGoogleViewModelFactory()
+        factory = SignInGoogleViewModelFactory(context.applicationContext as Application)
     )
 
     val state = mSignInViewModel.googleUser.observeAsState()
