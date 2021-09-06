@@ -84,9 +84,10 @@ fun AuthScreen(navController: NavController) {
             }
         }
 
-    AuthView(onClick = { authResultLauncher.launch(signInRequestCode) }, isError = isError.value)
+    AuthView(onClick = { authResultLauncher.launch(signInRequestCode) }, isError = isError.value, mSignInViewModel)
 
     user?.let {
+        mSignInViewModel.hideLoading()
         navController.navigate(Destinations.Home)
     }
 }
@@ -94,12 +95,14 @@ fun AuthScreen(navController: NavController) {
 @Composable
 fun AuthView(
     onClick: () -> Unit,
-    isError: Boolean = false
+    isError: Boolean = false,
+    mSignInViewModel: SignInGoogleViewModel
 ) {
-    val isLoading = rememberSaveable { mutableStateOf(false) }
+    val state = mSignInViewModel.loading.observeAsState()
+    val isLoading = state.value
 
     Scaffold {
-        if(isLoading.value && !isError) {
+        if(isLoading == true && !isError) {
             FullScreenLoader()
         } else {
             Column(
@@ -109,7 +112,7 @@ fun AuthView(
             ) {
                 SignInGoogleButton(
                     onClick = {
-                        isLoading.value = true
+                        mSignInViewModel.showLoading()
                         onClick()
                     },
                 )
@@ -117,7 +120,7 @@ fun AuthView(
                 when {
                     isError -> {
                         isError.let {
-                            isLoading.value = false
+                            mSignInViewModel.hideLoading()
                             Spacer(modifier = Modifier.height(20.dp))
                             Text("Something went wrong...")
                         }
