@@ -32,11 +32,13 @@ import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
 import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
+import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
 import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModel
 import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModelFactory
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModel
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModelFactory
 import com.google.android.gms.common.api.ApiException
+import com.squareup.moshi.Moshi
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
@@ -84,11 +86,20 @@ fun AuthScreen(navController: NavController) {
             }
         }
 
-    AuthView(onClick = { authResultLauncher.launch(signInRequestCode) }, isError = isError.value, mSignInViewModel)
+    AuthView(
+        onClick = { authResultLauncher.launch(signInRequestCode) },
+        isError = isError.value,
+        mSignInViewModel
+    )
 
     user?.let {
         mSignInViewModel.hideLoading()
-        navController.navigate(Destinations.Home)
+
+        val moshi = Moshi.Builder().build()
+        val jsonAdapter = moshi.adapter(GoogleUserModel::class.java)
+        val userJson = jsonAdapter.toJson(user)
+
+        navController.navigate(Destinations.Home.replace("{user}", userJson))
     }
 }
 
@@ -102,7 +113,7 @@ fun AuthView(
     val isLoading = state.value
 
     Scaffold {
-        if(isLoading == true && !isError) {
+        if (isLoading == true && !isError) {
             FullScreenLoader()
         } else {
             Column(
@@ -143,7 +154,10 @@ private fun FullScreenLoader() {
 }
 
 @Composable
-fun HomeView(navController: NavController) {
+fun HomeView(
+    navController: NavController,
+    userModel: GoogleUserModel,
+) {
     val context = LocalContext.current
     val mTodoViewModel: TodoViewModel = viewModel(
         factory = TodoViewModelFactory(context.applicationContext as Application)
@@ -161,6 +175,13 @@ fun HomeView(navController: NavController) {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
+        Text(
+            "Welcome ${userModel.name}",
+            modifier = Modifier
+                .paddingFromBaseline(40.dp),
+            style = MaterialTheme.typography.h5,
+        )
+        Spacer(modifier = Modifier.padding(bottom = 16.dp))
         Text(TITLE_MAIN)
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
         CustomCardState(navController, mTodoViewModel)
