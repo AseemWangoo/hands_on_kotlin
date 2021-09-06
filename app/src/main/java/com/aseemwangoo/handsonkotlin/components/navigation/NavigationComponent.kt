@@ -16,7 +16,7 @@ fun NavigationComponent() {
 
     HandsOnKotlinTheme {
         NavHost(navController = navController, startDestination = Destinations.Auth) {
-            composable(Destinations.Auth) { AuthScreen()}
+            composable(Destinations.Auth) { AuthScreen(navController)}
             composable(Destinations.Home) { HomeView(navController) }
             composable(Destinations.AddTodo) { AddView(navController) }
         }

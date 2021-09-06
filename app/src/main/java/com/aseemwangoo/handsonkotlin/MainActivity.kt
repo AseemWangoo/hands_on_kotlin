@@ -31,7 +31,9 @@ import com.aseemwangoo.handsonkotlin.components.signingoogle.SignInGoogleButton
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
-import com.aseemwangoo.handsonkotlin.google.*
+import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
+import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModel
+import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModelFactory
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModel
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModelFactory
 import com.google.android.gms.common.api.ApiException
@@ -54,11 +56,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AuthScreen() {
+fun AuthScreen(navController: NavController) {
     val signInRequestCode = 1
     val mSignInViewModel: SignInGoogleViewModel = viewModel(
         factory = SignInGoogleViewModelFactory()
     )
+
+    val state = mSignInViewModel.googleUser.observeAsState()
+    val user = state.value
+
+    val isError = rememberSaveable { mutableStateOf(false) }
 
     val authResultLauncher =
         rememberLauncherForActivityResult(contract = GoogleApiContract()) { task ->
@@ -67,21 +74,28 @@ fun AuthScreen() {
 
                 if (gsa != null) {
                     mSignInViewModel.fetchSignInUser(gsa.email, gsa.displayName)
+                } else {
+                    isError.value = true
                 }
-            } catch(e: ApiException) {
+            } catch (e: ApiException) {
                 Timber.d("Error in AuthScreen%s", e.toString())
             }
         }
 
-    AuthView(onClick = { authResultLauncher.launch(signInRequestCode) })
+    AuthView(onClick = { authResultLauncher.launch(signInRequestCode) }, isError = isError.value)
 
-//    mSignInViewModel.googleUser.value?.let { AuthView(state = it) }
+    user?.let {
+        navController.navigate(Destinations.Home)
+    }
 }
 
 @Composable
 fun AuthView(
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    isError: Boolean = false
 ) {
+    val isLoading = rememberSaveable { mutableStateOf(false) }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -89,27 +103,51 @@ fun AuthView(
     ) {
         SignInGoogleButton(
             onClick = {
+                isLoading.value = true
                 onClick()
             },
-            isLoading = false
         )
+
+        when {
+            isError -> {
+                isError.let {
+                    isLoading.value = false
+                    Spacer(modifier = Modifier.height(20.dp))
+                    Text("Something went wrong...")
+                }
+            }
+        }
     }
-//    if (state.showLoading) {
-//        FullScreenLoader()
-//    } else {
-//        Column(
-//            modifier = Modifier.fillMaxSize(),
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//        ) {
-//            SignInGoogleButton(
-//                onClick = {
+
+//    Scaffold() {
+//        if(isLoading.value) {
+//            FullScreenLoader()
+//        } else {
+//            Column(
+//                modifier = Modifier.fillMaxSize(),
+//                verticalArrangement = Arrangement.Center,
+//                horizontalAlignment = Alignment.CenterHorizontally,
+//            ) {
+//                SignInGoogleButton(
+//                    onClick = {
+//                        isLoading.value = true
+//                        onClick()
+//                    },
+//                )
 //
-//                },
-//                isLoading = true
-//            )
+//                when {
+//                    isError -> {
+//                        isError.let {
+//                            isLoading.value = false
+//                            Spacer(modifier = Modifier.height(20.dp))
+//                            Text("Something went wrong...")
+//                        }
+//                    }
+//                }
+//            }
 //        }
 //    }
+
 }
 
 @Composable

@@ -1,8 +1,6 @@
 package com.aseemwangoo.handsonkotlin.google
 
-import android.app.Application
 import androidx.lifecycle.*
-import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import kotlinx.coroutines.launch
 
 class SignInGoogleViewModel(
@@ -10,9 +8,9 @@ class SignInGoogleViewModel(
     private var _userState = MutableLiveData<GoogleUserModel>()
     val googleUser: LiveData<GoogleUserModel> = _userState
 
-    fun fetchSignInUser(email: String?, name:String?) {
+    fun fetchSignInUser(email: String?, name: String?) {
         viewModelScope.launch {
-            _userState.value = _userState.value?.copy(
+            _userState.value = GoogleUserModel(
                 email = email,
                 name = name,
             )

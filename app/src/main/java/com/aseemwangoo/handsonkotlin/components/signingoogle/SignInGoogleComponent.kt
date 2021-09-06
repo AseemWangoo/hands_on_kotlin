@@ -1,19 +1,19 @@
 package com.aseemwangoo.handsonkotlin.components.signingoogle
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.aseemwangoo.handsonkotlin.R
 
@@ -21,11 +21,9 @@ import com.aseemwangoo.handsonkotlin.R
 @Composable
 fun SignInGoogleButton(
     onClick: () -> Unit,
-    isLoading: Boolean = false,
 ) {
     Surface(
         modifier = Modifier.clickable(
-            enabled = !isLoading,
             onClick = onClick
         ),
         border = BorderStroke(width = 1.dp, color = Color.LightGray),
@@ -48,23 +46,10 @@ fun SignInGoogleButton(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = if (isLoading) {
-                    "Logging in..."
-                } else {
-                    "Sign in With Google"
-                }
+                text = "Sign in With Google"
             )
 
-            AnimatedVisibility(isLoading) {
-                Spacer(modifier = Modifier.width(16.dp))
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .height(16.dp)
-                        .width(16.dp),
-                    color = MaterialTheme.colors.primary,
-                    strokeWidth = 2.dp,
-                )
-            }
+            Spacer(modifier = Modifier.width(16.dp))
         }
     }
 }
