@@ -1,8 +1,7 @@
 # hands_on_kotlin
 
 Hands on Kotlin is a sample todo app, built with
-[Jetpack Compose](https://developer.android.com/jetpack/compose). The goal of the sample is to
-showcase text input, navigation, local database (room) and state capabilities of Compose.
+[Jetpack Compose](https://developer.android.com/jetpack/compose).
 
 To try out this app, you need to use the latest Canary version of Android Studio 4.2.
 You can clone this repository or import the
@@ -11,11 +10,12 @@ project from Android Studio following the steps
 
 Screenshots
 -----------
- <img src="screenshots/capture.png" width="425"/>
+ <img src="screenshots/capture1.png" width="225"/>
+ <img src="screenshots/capture2.png" width="225"/>
 
 ## Features
 
-This sample contains 2 screens: a list of todos, where the user can view their todos, and a add todo screen.
+This sample contains 3 screens: Authentication screen (Sign in with Google), a list of todos, where the user can view their todos, and a add todo screen.
 
 ### Room
 
@@ -38,3 +38,9 @@ Uses navigation composable for navigating between screens
 Backup on demand and periodic backup
 
 - https://levelup.gitconnected.com/using-workmanager-in-android-be5cae1f155a
+
+### Testing in Compose
+
+Shows different ways to test compose
+
+- https://levelup.gitconnected.com/testing-in-compose-d09b59337e4e
