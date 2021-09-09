@@ -4,6 +4,7 @@ import android.app.Application
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,9 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Observer
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
@@ -28,11 +27,18 @@ import androidx.work.WorkInfo
 import com.aseemwangoo.handsonkotlin.components.backUpBtn.BackUpButton
 import com.aseemwangoo.handsonkotlin.components.navigation.Destinations
 import com.aseemwangoo.handsonkotlin.components.navigation.NavigationComponent
+import com.aseemwangoo.handsonkotlin.components.signingoogle.SignInGoogleButton
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
+import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
+import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
+import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModel
+import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModelFactory
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModel
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModelFactory
+import com.google.android.gms.common.api.ApiException
+import com.squareup.moshi.Moshi
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
@@ -52,7 +58,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun HomeView(navController: NavController) {
+fun HomeView(
+    navController: NavController,
+    userModel: GoogleUserModel,
+) {
     val context = LocalContext.current
     val mTodoViewModel: TodoViewModel = viewModel(
         factory = TodoViewModelFactory(context.applicationContext as Application)
@@ -70,6 +79,13 @@ fun HomeView(navController: NavController) {
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
+        Text(
+            "Welcome ${userModel.name}",
+            modifier = Modifier
+                .paddingFromBaseline(40.dp),
+            style = MaterialTheme.typography.h5,
+        )
+        Spacer(modifier = Modifier.padding(bottom = 16.dp))
         Text(TITLE_MAIN)
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
         CustomCardState(navController, mTodoViewModel)

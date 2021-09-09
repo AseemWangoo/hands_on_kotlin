@@ -21,10 +21,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import com.aseemwangoo.handsonkotlin.SAVE_TODO
 import com.aseemwangoo.handsonkotlin.TEST_INPUT_TAG
-import com.aseemwangoo.handsonkotlin.components.navigation.Destinations
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
@@ -43,7 +41,7 @@ fun AddView(navController: NavController) {
                 insertTodoInDB(inputViewModel.todo.value.toString(), mTodoViewModel)
 
                 Toast.makeText(context, "Added Todo", Toast.LENGTH_SHORT).show()
-                navController.navigate(Destinations.Home)
+                navController.popBackStack()
             }
         }
     ) {
