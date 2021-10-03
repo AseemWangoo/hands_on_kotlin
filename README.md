@@ -17,6 +17,12 @@ Screenshots
 
 This sample contains 3 screens: Authentication screen (Sign in with Google), a list of todos, where the user can view their todos, and a add todo screen.
 
+### State in Compose
+
+Different ways to manage state.
+
+- https://levelup.gitconnected.com/using-state-in-jetpack-compose-b7445b697736
+
 ### Room
 
 Uses Room to save todos, locally.
@@ -44,3 +50,9 @@ Backup on demand and periodic backup
 Shows different ways to test compose
 
 - https://levelup.gitconnected.com/testing-in-compose-d09b59337e4e
+
+### Google SignIn Compose
+
+How to integrate google sign in compose
+
+- https://proandroiddev.com/google-signin-compose-a9afa67b7519
