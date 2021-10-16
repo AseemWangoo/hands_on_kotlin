@@ -1,3 +1,4 @@
+@file:Suppress("MayBeConst")
 @file:JvmName("Constants")
 
 package com.aseemwangoo.handsonkotlin
@@ -12,7 +13,6 @@ const val NOTIFICATION_ID = 1
     "Verbose WorkManager Notifications"
 const val VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION =
     "Shows notifications whenever work starts"
-
 
 const val KEY_ONDEMANDWORKER_RESP = "KEY_ONDEMANDWORKER_RESP"
 const val KEY_FILEWORKER_RESP = "KEY_FILEWORKER_RESP"
@@ -33,4 +33,3 @@ const val TEST_INPUT_TAG = "InputTodo Tag"
 const val TITLE_MAIN = "My ToDo List"
 const val ADD_TODO = "Add Todo"
 const val SAVE_TODO = "Save Todo"
-

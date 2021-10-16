@@ -82,7 +82,4 @@ class ScreenshotComparatorTest {
     private fun Bitmap.getRow(pixels: IntArray, column: Int) {
         this.getPixels(pixels, 0, width, 0, column, width, 1)
     }
-
 }
-
-

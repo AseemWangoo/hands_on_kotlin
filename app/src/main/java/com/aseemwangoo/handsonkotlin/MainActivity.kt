@@ -4,19 +4,31 @@ import android.app.Application
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material.Button
+import androidx.compose.material.Checkbox
+import androidx.compose.material.Divider
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.ListItem
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -25,20 +37,14 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import androidx.work.WorkInfo
 import com.aseemwangoo.handsonkotlin.components.backUpBtn.BackUpButton
-import com.aseemwangoo.handsonkotlin.components.navigation.Destinations
+import com.aseemwangoo.handsonkotlin.components.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.components.navigation.NavigationComponent
-import com.aseemwangoo.handsonkotlin.components.signingoogle.SignInGoogleButton
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
-import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
-import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModel
-import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModelFactory
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModel
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModelFactory
-import com.google.android.gms.common.api.ApiException
-import com.squareup.moshi.Moshi
 import timber.log.Timber
 
 class MainActivity : ComponentActivity() {
@@ -142,8 +148,7 @@ fun CustomCardState(
     navController: NavController,
     mTodoViewModel: TodoViewModel
 ) {
-    Column(
-    ) {
+    Column() {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -159,14 +164,14 @@ fun CustomCardState(
 }
 
 // Approach 4: ViewModel
-//class CheckedViewModel : ViewModel() {
+// class CheckedViewModel : ViewModel() {
 //    private val _isDone: MutableLiveData<Boolean> = MutableLiveData(false)
 //    val isDone: LiveData<Boolean> = _isDone
 //
 //    fun onCheckboxChange(state: Boolean) {
 //        _isDone.value = state
 //    }
-//}
+// }
 
 private fun backupDataInfoObserver(listOfWorkInfo: List<WorkInfo>) {
     if (listOfWorkInfo.isNotEmpty()) {
@@ -181,4 +186,3 @@ private fun backupDataInfoObserver(listOfWorkInfo: List<WorkInfo>) {
         }
     }
 }
-

@@ -1,3 +1,4 @@
+@file:Suppress("TooGenericExceptionCaught")
 package com.aseemwangoo.handsonkotlin.workers
 
 import android.content.Context
@@ -7,7 +8,8 @@ import androidx.work.workDataOf
 import com.aseemwangoo.handsonkotlin.KEY_FILEWORKER_RESP
 import timber.log.Timber
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class FileWorker(ctx: Context, workerParams: WorkerParameters) :
     Worker(ctx, workerParams) {
@@ -33,6 +35,5 @@ class FileWorker(ctx: Context, workerParams: WorkerParameters) :
             Timber.e(throwable)
             Result.failure()
         }
-
     }
 }

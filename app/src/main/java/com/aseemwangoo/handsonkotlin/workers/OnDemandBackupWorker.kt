@@ -1,3 +1,5 @@
+@file:Suppress("TooGenericExceptionCaught")
+
 package com.aseemwangoo.handsonkotlin.workers
 
 import android.content.Context

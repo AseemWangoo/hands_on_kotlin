@@ -9,7 +9,15 @@ import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.aseemwangoo.handsonkotlin.*
+import com.aseemwangoo.handsonkotlin.BACKUP_FILE_NAME
+import com.aseemwangoo.handsonkotlin.CHANNEL_ID
+import com.aseemwangoo.handsonkotlin.DELAY_TIME_MILLIS
+import com.aseemwangoo.handsonkotlin.NOTIFICATION_ID
+import com.aseemwangoo.handsonkotlin.NOTIFICATION_TITLE
+import com.aseemwangoo.handsonkotlin.OUTPUT_PATH
+import com.aseemwangoo.handsonkotlin.R
+import com.aseemwangoo.handsonkotlin.VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION
+import com.aseemwangoo.handsonkotlin.VERBOSE_NOTIFICATION_CHANNEL_NAME
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -69,7 +77,6 @@ fun saveToFile(applicationContext: Context, content: String): Uri {
                 it.close()
             } catch (ignore: IOException) {
             }
-
         }
     }
 

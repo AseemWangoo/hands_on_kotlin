@@ -5,7 +5,13 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.aseemwangoo.handsonkotlin.ONDEMAND_BACKUP_WORK_NAME
 import com.aseemwangoo.handsonkotlin.TAG_BACKUP
 import com.aseemwangoo.handsonkotlin.TAG_FILE
@@ -60,7 +66,7 @@ class OnDemandBackupViewModel(application: Application) : AndroidViewModel(appli
     internal fun cancelBackup() {
         workManager.cancelUniqueWork(ONDEMAND_BACKUP_WORK_NAME)
     }
- }
+}
 
 class OnDemandBackupViewModelFactory(
     private val application: Application
