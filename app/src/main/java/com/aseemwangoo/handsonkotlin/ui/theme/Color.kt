@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.aseemwangoo.handsonkotlin.ui.theme
 
 import androidx.compose.ui.graphics.Color

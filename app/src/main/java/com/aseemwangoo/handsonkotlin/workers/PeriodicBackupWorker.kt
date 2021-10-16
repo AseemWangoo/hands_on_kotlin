@@ -1,3 +1,5 @@
+@file:Suppress("TooGenericExceptionCaught")
+
 package com.aseemwangoo.handsonkotlin.workers
 
 import android.content.Context
@@ -7,7 +9,8 @@ import androidx.work.workDataOf
 import com.aseemwangoo.handsonkotlin.KEY_PERIODICWORKER_RESP
 import timber.log.Timber
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
 class PeriodicBackupWorker(ctx: Context, workerParams: WorkerParameters) :
     Worker(ctx, workerParams) {

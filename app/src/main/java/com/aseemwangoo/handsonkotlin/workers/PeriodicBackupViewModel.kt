@@ -4,7 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.aseemwangoo.handsonkotlin.PERIODIC_BACKUP_WORK_NAME
 import com.aseemwangoo.handsonkotlin.TAG_PERIODIC_BACKUP
 import java.util.concurrent.TimeUnit

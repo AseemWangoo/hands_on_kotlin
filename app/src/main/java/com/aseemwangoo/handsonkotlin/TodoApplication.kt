@@ -2,12 +2,17 @@ package com.aseemwangoo.handsonkotlin
 
 import android.app.Application
 import android.util.Log
-import androidx.work.*
+import androidx.work.Configuration
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.aseemwangoo.handsonkotlin.workers.PeriodicBackupWorker
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-class TodoApplication() : Application(), Configuration.Provider {
+class TodoApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
 

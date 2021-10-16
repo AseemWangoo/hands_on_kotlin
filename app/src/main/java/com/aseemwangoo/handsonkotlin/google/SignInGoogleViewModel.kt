@@ -2,7 +2,12 @@ package com.aseemwangoo.handsonkotlin.google
 
 import android.app.Application
 import android.content.Context
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import kotlinx.coroutines.launch
 
@@ -34,7 +39,7 @@ class SignInGoogleViewModel(application: Application) : AndroidViewModel(applica
         _loadingState.value = true
 
         val gsa = GoogleSignIn.getLastSignedInAccount(applicationContext)
-        if(gsa != null) {
+        if (gsa != null) {
             _userState.value = GoogleUserModel(
                 email = gsa.email,
                 name = gsa.displayName,

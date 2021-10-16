@@ -1,7 +1,11 @@
 package com.aseemwangoo.handsonkotlin.database
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -29,7 +33,7 @@ class TodoViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun deleteTodo(todoItem: TodoItem) {
-        viewModelScope.launch (Dispatchers.IO ){
+        viewModelScope.launch(Dispatchers.IO) {
             repository.deleteTodo(todoItem = todoItem)
         }
     }

@@ -1,13 +1,24 @@
 package com.aseemwangoo.handsonkotlin.compose
 
-import androidx.compose.ui.test.*
+import androidx.compose.ui.test.assertHasNoClickAction
+import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
+import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performTextInput
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
-import com.aseemwangoo.handsonkotlin.*
+import com.aseemwangoo.handsonkotlin.ADD_TODO
+import com.aseemwangoo.handsonkotlin.HomeView
+import com.aseemwangoo.handsonkotlin.SAVE_TODO
+import com.aseemwangoo.handsonkotlin.TEST_INPUT_TAG
+import com.aseemwangoo.handsonkotlin.TITLE_MAIN
 import com.aseemwangoo.handsonkotlin.components.addTodo.AddView
 import com.aseemwangoo.handsonkotlin.components.navigation.NavigationComponent
+import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,8 +37,15 @@ class TodoComposeTest {
 
     @Test
     fun testIfTitleExists() {
+
         composeTestRule.setContent {
-            HomeView(navController)
+            HomeView(
+                navController,
+                GoogleUserModel(
+                    email = "email",
+                    name = "name",
+                )
+            )
         }
 
         composeTestRule.onNodeWithText(TITLE_MAIN)
@@ -37,12 +55,17 @@ class TodoComposeTest {
     @Test
     fun testIfTitleClicked() {
         composeTestRule.setContent {
-            HomeView(navController)
+            HomeView(
+                navController,
+                GoogleUserModel(
+                    email = "email",
+                    name = "name",
+                )
+            )
         }
 
         composeTestRule.onNodeWithText(TITLE_MAIN)
             .assertHasNoClickAction()
-
     }
 
     @Test
