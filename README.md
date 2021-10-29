@@ -56,3 +56,9 @@ Shows different ways to test compose
 How to integrate google sign in compose
 
 - https://proandroiddev.com/google-signin-compose-a9afa67b7519
+
+### Supercharge your Kotlin project
+
+Tips for the Kotlin code
+
+- https://levelup.gitconnected.com/supercharge-your-kotlin-project-726d85857798
