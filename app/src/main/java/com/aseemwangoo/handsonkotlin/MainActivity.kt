@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Button
@@ -87,12 +86,13 @@ fun HomeView(
     ) {
         Text(
             "Welcome ${userModel.name}",
-            modifier = Modifier
-                .paddingFromBaseline(40.dp),
-            style = MaterialTheme.typography.h5,
+            style = MaterialTheme.typography.h4,
         )
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
-        Text(TITLE_MAIN)
+        Text(
+            TITLE_MAIN,
+            style = MaterialTheme.typography.h6,
+        )
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
         CustomCardState(navController, mTodoViewModel)
         TodoList(list = items, mTodoViewModel = mTodoViewModel)
