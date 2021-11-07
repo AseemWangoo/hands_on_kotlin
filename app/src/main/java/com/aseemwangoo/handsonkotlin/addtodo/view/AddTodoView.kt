@@ -1,4 +1,4 @@
-package com.aseemwangoo.handsonkotlin.components.addTodo
+package com.aseemwangoo.handsonkotlin.addtodo.view
 
 import android.app.Application
 import android.widget.Toast
@@ -30,7 +30,7 @@ import com.aseemwangoo.handsonkotlin.ui.components.fab.FABComponent
 import com.aseemwangoo.handsonkotlin.ui.components.textfield.InputFieldComponent
 
 @Composable
-fun AddView(navController: NavController) {
+fun AddTodoView(navController: NavController) {
     val inputViewModel = InputViewModel()
     val context = LocalContext.current
     val mTodoViewModel: TodoViewModel = viewModel(
@@ -82,7 +82,7 @@ private fun InputField(
     }
 }
 
-fun insertTodoInDB(todo: String, mTodoViewModel: TodoViewModel) {
+private fun insertTodoInDB(todo: String, mTodoViewModel: TodoViewModel) {
     if (todo.isNotEmpty()) {
         val todoItem = TodoItem(
             itemName = todo,
