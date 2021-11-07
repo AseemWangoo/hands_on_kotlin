@@ -16,9 +16,9 @@ import com.aseemwangoo.handsonkotlin.HomeView
 import com.aseemwangoo.handsonkotlin.SAVE_TODO
 import com.aseemwangoo.handsonkotlin.TEST_INPUT_TAG
 import com.aseemwangoo.handsonkotlin.TITLE_MAIN
-import com.aseemwangoo.handsonkotlin.components.addTodo.AddView
-import com.aseemwangoo.handsonkotlin.components.navigation.NavigationComponent
+import com.aseemwangoo.handsonkotlin.addtodo.view.AddTodoView
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
+import com.aseemwangoo.handsonkotlin.shared.navigation.NavigationComponent
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -104,7 +104,7 @@ class TodoComposeTest {
     @Test
     fun testForTodoInputField() {
         composeTestRule.setContent {
-            AddView(navController)
+            AddTodoView(navController)
         }
         val dummyText = "Dummy Text"
 

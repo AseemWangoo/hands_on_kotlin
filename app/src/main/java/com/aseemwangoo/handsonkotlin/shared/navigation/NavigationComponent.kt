@@ -1,14 +1,14 @@
-package com.aseemwangoo.handsonkotlin.components.navigation
+package com.aseemwangoo.handsonkotlin.shared.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.aseemwangoo.handsonkotlin.HomeView
+import com.aseemwangoo.handsonkotlin.addtodo.view.AddTodoView
 import com.aseemwangoo.handsonkotlin.auth.view.AuthScreen
-import com.aseemwangoo.handsonkotlin.components.addTodo.AddView
-import com.aseemwangoo.handsonkotlin.components.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
+import com.aseemwangoo.handsonkotlin.shared.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.ui.theme.AppTheme
 import com.squareup.moshi.Moshi
 
@@ -28,7 +28,7 @@ fun NavigationComponent() {
 
                 HomeView(navController, userModel = userObject!!)
             }
-            composable(Destinations.AddTodo) { AddView(navController) }
+            composable(Destinations.AddTodo) { AddTodoView(navController) }
         }
     }
 }

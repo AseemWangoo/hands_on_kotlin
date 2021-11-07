@@ -34,12 +34,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import androidx.work.WorkInfo
-import com.aseemwangoo.handsonkotlin.components.destinations.Destinations
-import com.aseemwangoo.handsonkotlin.components.navigation.NavigationComponent
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
+import com.aseemwangoo.handsonkotlin.shared.destinations.Destinations
+import com.aseemwangoo.handsonkotlin.shared.navigation.NavigationComponent
 import com.aseemwangoo.handsonkotlin.ui.components.button.SimpleButtonComponent
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModel
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModelFactory

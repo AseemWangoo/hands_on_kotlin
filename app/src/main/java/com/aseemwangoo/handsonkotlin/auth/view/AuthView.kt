@@ -28,11 +28,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.aseemwangoo.handsonkotlin.R
-import com.aseemwangoo.handsonkotlin.components.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
 import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModel
 import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModelFactory
+import com.aseemwangoo.handsonkotlin.shared.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.ui.components.loader.FullScreenLoaderComponent
 import com.aseemwangoo.handsonkotlin.ui.components.signingoogle.SignInGoogleButton
 import com.google.android.gms.common.api.ApiException
