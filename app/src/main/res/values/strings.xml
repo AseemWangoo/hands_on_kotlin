@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Hands On Kotlin</string>
     <string name="google_cloud_server_client_id" translatable="false"></string>
+    <string name="app_login_bottom">Made with ❤️ - ToDo App</string>
+    <string name="app_logo_desc">App Logo</string>
+    <string name="auth_error_msg">Something went wrong...</string>
 </resources>

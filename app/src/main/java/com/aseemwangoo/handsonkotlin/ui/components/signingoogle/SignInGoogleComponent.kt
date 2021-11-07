@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
@@ -42,7 +43,7 @@ fun SignInGoogleButton(
                 end = 16.dp,
                 top = 12.dp,
                 bottom = 12.dp
-            )
+            ).fillMaxWidth()
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_google_logo),

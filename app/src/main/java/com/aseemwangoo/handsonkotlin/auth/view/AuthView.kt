@@ -1,13 +1,16 @@
-package com.aseemwangoo.handsonkotlin.screens
+package com.aseemwangoo.handsonkotlin.auth.view
 
 import android.app.Application
+import android.content.res.Configuration
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -16,10 +19,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
+import com.aseemwangoo.handsonkotlin.R
 import com.aseemwangoo.handsonkotlin.components.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
@@ -78,7 +86,7 @@ fun AuthScreen(navController: NavController) {
 }
 
 @Composable
-fun AuthView(
+private fun AuthView(
     onClick: () -> Unit,
     isError: Boolean = false,
     mSignInViewModel: SignInGoogleViewModel
@@ -91,27 +99,77 @@ fun AuthView(
             FullScreenLoaderComponent()
         } else {
             Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                SignInGoogleButton(
-                    onClick = {
-                        mSignInViewModel.showLoading()
-                        onClick()
-                    },
+                Spacer(modifier = Modifier.weight(1F))
+                Image(
+                    painterResource(id = R.drawable.app_logo),
+                    contentDescription = stringResource(R.string.app_logo_desc),
+                )
+                Spacer(modifier = Modifier.weight(1F))
+                SignInGoogleButton(onClick = {
+                    mSignInViewModel.showLoading()
+                    onClick()
+                })
+                Spacer(modifier = Modifier.weight(1F))
+                Text(
+                    text = stringResource(R.string.app_login_bottom),
+                    textAlign = TextAlign.Center,
                 )
 
                 when {
                     isError -> {
                         isError.let {
+                            Text(
+                                stringResource(R.string.auth_error_msg),
+                                style = MaterialTheme.typography.h6
+                            )
                             mSignInViewModel.hideLoading()
-                            Spacer(modifier = Modifier.height(20.dp))
-                            Text("Something went wrong...")
                         }
                     }
                 }
             }
         }
+    }
+}
+
+@Preview(
+    name = "Night Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Preview(
+    name = "Day Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
+@Composable
+fun PreviewAuthView() {
+    Surface {
+        Temp()
+    }
+}
+
+@Composable
+private fun Temp() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(24.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Spacer(modifier = Modifier.weight(1F))
+        Image(
+            painterResource(id = R.drawable.app_logo),
+            contentDescription = stringResource(R.string.app_logo_desc),
+        )
+        Spacer(modifier = Modifier.weight(1F))
+        SignInGoogleButton(onClick = {})
+        Spacer(modifier = Modifier.weight(1F))
+        Text(
+            text = stringResource(R.string.app_login_bottom),
+            textAlign = TextAlign.Center,
+        )
     }
 }
