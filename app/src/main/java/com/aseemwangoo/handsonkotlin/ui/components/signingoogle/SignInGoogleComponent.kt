@@ -1,5 +1,6 @@
-package com.aseemwangoo.handsonkotlin.components.signingoogle
+package com.aseemwangoo.handsonkotlin.ui.components.signingoogle
 
+import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -58,9 +59,15 @@ fun SignInGoogleButton(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Preview(
+    name = "Night Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Preview(
+    name = "Day Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
 @Composable
 fun PreviewSignInGoogleButton() {
-    SignInGoogleButton(onClick = {
-    })
+    SignInGoogleButton(onClick = {})
 }

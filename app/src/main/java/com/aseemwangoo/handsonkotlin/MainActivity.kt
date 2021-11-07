@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
@@ -35,13 +34,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import androidx.work.WorkInfo
-import com.aseemwangoo.handsonkotlin.components.backUpBtn.BackUpButton
 import com.aseemwangoo.handsonkotlin.components.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.components.navigation.NavigationComponent
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
+import com.aseemwangoo.handsonkotlin.ui.components.button.SimpleButtonComponent
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModel
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModelFactory
 import timber.log.Timber
@@ -97,7 +96,7 @@ fun HomeView(
         CustomCardState(navController, mTodoViewModel)
         TodoList(list = items, mTodoViewModel = mTodoViewModel)
         Spacer(modifier = Modifier.padding(top = 32.dp))
-        BackUpButton(mBackUpViewModel)
+        BackupOptions(mBackUpViewModel)
     }
 }
 
@@ -144,7 +143,7 @@ fun TodoList(
 }
 
 @Composable
-fun CustomCardState(
+private fun CustomCardState(
     navController: NavController,
     mTodoViewModel: TodoViewModel
 ) {
@@ -153,25 +152,33 @@ fun CustomCardState(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Button(onClick = { navController.navigate(Destinations.AddTodo) }) {
-                Text(text = ADD_TODO)
-            }
-            Button(onClick = { mTodoViewModel.deleteAllTodos() }) {
-                Text(text = "Clear all")
-            }
+            SimpleButtonComponent(text = ADD_TODO, onClick = {
+                navController.navigate(Destinations.AddTodo)
+            })
+            SimpleButtonComponent(text = "Clear all", onClick = {
+                mTodoViewModel.deleteAllTodos()
+            })
         }
     }
 }
 
-// Approach 4: ViewModel
-// class CheckedViewModel : ViewModel() {
-//    private val _isDone: MutableLiveData<Boolean> = MutableLiveData(false)
-//    val isDone: LiveData<Boolean> = _isDone
-//
-//    fun onCheckboxChange(state: Boolean) {
-//        _isDone.value = state
-//    }
-// }
+@Composable
+private fun BackupOptions(
+    mBackUpViewModel: OnDemandBackupViewModel
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        SimpleButtonComponent(text = "Backup Now", onClick = {
+            mBackUpViewModel.beginBackup()
+        })
+        Spacer(modifier = Modifier.padding(end = 4.dp))
+        SimpleButtonComponent(text = "Cancel Backup", onClick = {
+            mBackUpViewModel.cancelBackup()
+        })
+    }
+}
 
 private fun backupDataInfoObserver(listOfWorkInfo: List<WorkInfo>) {
     if (listOfWorkInfo.isNotEmpty()) {

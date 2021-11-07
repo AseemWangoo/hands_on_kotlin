@@ -9,14 +9,14 @@ import com.aseemwangoo.handsonkotlin.components.addTodo.AddView
 import com.aseemwangoo.handsonkotlin.components.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
 import com.aseemwangoo.handsonkotlin.screens.AuthScreen
-import com.aseemwangoo.handsonkotlin.ui.theme.HandsOnKotlinTheme
+import com.aseemwangoo.handsonkotlin.ui.theme.AppTheme
 import com.squareup.moshi.Moshi
 
 @Composable
 fun NavigationComponent() {
     val navController = rememberNavController()
 
-    HandsOnKotlinTheme {
+    AppTheme {
         NavHost(navController = navController, startDestination = Destinations.Auth) {
             composable(Destinations.Auth) { AuthScreen(navController) }
             composable(Destinations.Home) { backStackEntry ->

@@ -51,4 +51,8 @@ val typography = Typography(
         fontFamily = MontserratBold,
         fontSize = 13.sp
     ),
+    caption = TextStyle(
+        fontFamily = MontserratRegular,
+        fontSize = 12.sp
+    ),
 )

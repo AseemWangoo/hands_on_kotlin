@@ -12,7 +12,7 @@ private val DarkColorPalette = darkColors(
 )
 
 @Composable
-fun HandsOnKotlinTheme(
+fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {

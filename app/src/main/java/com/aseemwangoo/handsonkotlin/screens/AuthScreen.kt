@@ -3,13 +3,10 @@ package com.aseemwangoo.handsonkotlin.screens
 import android.app.Application
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,11 +21,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.aseemwangoo.handsonkotlin.components.destinations.Destinations
-import com.aseemwangoo.handsonkotlin.components.signingoogle.SignInGoogleButton
 import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
 import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModel
 import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModelFactory
+import com.aseemwangoo.handsonkotlin.ui.components.loader.FullScreenLoaderComponent
+import com.aseemwangoo.handsonkotlin.ui.components.signingoogle.SignInGoogleButton
 import com.google.android.gms.common.api.ApiException
 import com.squareup.moshi.Moshi
 import timber.log.Timber
@@ -90,7 +88,7 @@ fun AuthView(
 
     Scaffold {
         if (isLoading == true && !isError) {
-            FullScreenLoader()
+            FullScreenLoaderComponent()
         } else {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -115,16 +113,5 @@ fun AuthView(
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun FullScreenLoader() {
-    Box(modifier = Modifier.fillMaxSize()) {
-        CircularProgressIndicator(
-            modifier = Modifier
-                .wrapContentSize()
-                .align(Alignment.Center)
-        )
     }
 }

@@ -7,11 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.ExtendedFloatingActionButton
-import androidx.compose.material.FloatingActionButtonDefaults
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -30,6 +26,8 @@ import com.aseemwangoo.handsonkotlin.TEST_INPUT_TAG
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
+import com.aseemwangoo.handsonkotlin.ui.components.fab.FABComponent
+import com.aseemwangoo.handsonkotlin.ui.components.textfield.InputFieldComponent
 
 @Composable
 fun AddView(navController: NavController) {
@@ -41,12 +39,12 @@ fun AddView(navController: NavController) {
 
     Scaffold(
         floatingActionButton = {
-            ExtendedFAB {
+            FABComponent(text = SAVE_TODO, onClick = {
                 insertTodoInDB(inputViewModel.todo.value.toString(), mTodoViewModel)
 
                 Toast.makeText(context, "Added Todo", Toast.LENGTH_SHORT).show()
                 navController.popBackStack()
-            }
+            })
         }
     ) {
         InputFieldState(inputViewModel)
@@ -54,7 +52,7 @@ fun AddView(navController: NavController) {
 }
 
 @Composable
-fun InputFieldState(inputViewModel: InputViewModel) {
+private fun InputFieldState(inputViewModel: InputViewModel) {
     val todo: String by inputViewModel.todo.observeAsState("")
 
     Column(modifier = Modifier.padding(16.dp)) {
@@ -64,34 +62,24 @@ fun InputFieldState(inputViewModel: InputViewModel) {
 }
 
 @Composable
-fun InputField(
+private fun InputField(
     name: String,
     onValChange: ((String) -> Unit)?
 ) {
     val focusManager = LocalFocusManager.current
 
     if (onValChange != null) {
-        TextField(
-            value = name,
-            placeholder = { Text(text = "Enter todo") },
+        InputFieldComponent(
+            text = name,
+            onChange = onValChange,
+            label = "Enter todo",
             modifier = Modifier
                 .padding(all = 16.dp)
                 .fillMaxWidth()
                 .testTag(TEST_INPUT_TAG),
-            onValueChange = onValChange,
-            singleLine = true,
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
         )
     }
-}
-
-@Composable
-fun ExtendedFAB(onClick: () -> Unit) {
-    ExtendedFloatingActionButton(
-        text = { Text(SAVE_TODO) },
-        onClick = onClick,
-        elevation = FloatingActionButtonDefaults.elevation(8.dp)
-    )
 }
 
 fun insertTodoInDB(todo: String, mTodoViewModel: TodoViewModel) {
