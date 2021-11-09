@@ -125,7 +125,8 @@ private fun AuthView(
                         isError.let {
                             Text(
                                 stringResource(R.string.auth_error_msg),
-                                style = MaterialTheme.typography.h6
+                                style = MaterialTheme.typography.h6,
+                                color = MaterialTheme.colors.error
                             )
                             mSignInViewModel.hideLoading()
                         }
