@@ -1,4 +1,4 @@
-package com.aseemwangoo.handsonkotlin.components.destinations
+package com.aseemwangoo.handsonkotlin.shared.destinations
 
 object Destinations {
     const val Auth = "auth"

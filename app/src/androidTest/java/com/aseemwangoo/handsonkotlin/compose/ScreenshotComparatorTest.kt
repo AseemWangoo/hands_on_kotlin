@@ -12,7 +12,7 @@ import androidx.compose.ui.test.onRoot
 import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
-import com.aseemwangoo.handsonkotlin.components.addTodo.AddView
+import com.aseemwangoo.handsonkotlin.addtodo.view.AddTodoView
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,7 +33,7 @@ class ScreenshotComparatorTest {
     @Test
     fun testAddTodoScreen() {
         composeTestRule.setContent {
-            AddView(navController)
+            AddTodoView(navController)
         }
 
         assertScreenshotMatchesGolden("add_todo", composeTestRule.onRoot())

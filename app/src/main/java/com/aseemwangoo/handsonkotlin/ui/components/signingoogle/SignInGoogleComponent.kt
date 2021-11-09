@@ -1,11 +1,13 @@
-package com.aseemwangoo.handsonkotlin.components.signingoogle
+package com.aseemwangoo.handsonkotlin.ui.components.signingoogle
 
+import android.content.res.Configuration
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
@@ -41,7 +43,7 @@ fun SignInGoogleButton(
                 end = 16.dp,
                 top = 12.dp,
                 bottom = 12.dp
-            )
+            ).fillMaxWidth()
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.ic_google_logo),
@@ -58,9 +60,15 @@ fun SignInGoogleButton(
     }
 }
 
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+@Preview(
+    name = "Night Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Preview(
+    name = "Day Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
 @Composable
 fun PreviewSignInGoogleButton() {
-    SignInGoogleButton(onClick = {
-    })
+    SignInGoogleButton(onClick = {})
 }
