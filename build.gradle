@@ -8,6 +8,8 @@ buildscript {
 
         // https://github.com/detekt/detekt/releases
         detektVersion = "1.17.0"
+
+        kotlinVersion = "1.4.32"
     }
     repositories {
         google()
@@ -18,7 +20,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.32"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "org.jlleitschuh.gradle:ktlint-gradle:$ktlintPluginVersion"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion"
 
@@ -26,6 +28,8 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
+
+apply from: "buildscripts/versions.gradle"
 
 subprojects {
     apply from: "../buildscripts/ktlint.gradle"

@@ -12,12 +12,12 @@ import androidx.navigation.testing.TestNavHostController
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import com.aseemwangoo.handsonkotlin.ADD_TODO
-import com.aseemwangoo.handsonkotlin.HomeView
 import com.aseemwangoo.handsonkotlin.SAVE_TODO
 import com.aseemwangoo.handsonkotlin.TEST_INPUT_TAG
 import com.aseemwangoo.handsonkotlin.TITLE_MAIN
 import com.aseemwangoo.handsonkotlin.addtodo.view.AddTodoView
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
+import com.aseemwangoo.handsonkotlin.home.view.HomeView
 import com.aseemwangoo.handsonkotlin.shared.navigation.NavigationComponent
 import org.junit.Before
 import org.junit.Rule
