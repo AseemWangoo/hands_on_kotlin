@@ -13,6 +13,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -26,7 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.navigate
 import com.aseemwangoo.handsonkotlin.R
 import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
@@ -73,15 +73,21 @@ fun AuthScreen(navController: NavController) {
         isError = isError.value,
         mSignInViewModel
     )
+    // Strange issue after upgrading to latest version
+    if (mSignInViewModel.googleUser.value != null) {
+        LaunchedEffect(key1 = Unit) {
+            mSignInViewModel.hideLoading()
 
-    user?.let {
-        mSignInViewModel.hideLoading()
+            val moshi = Moshi.Builder().build()
+            val jsonAdapter = moshi.adapter(GoogleUserModel::class.java).lenient()
+            val userJson = jsonAdapter.toJson(user)
 
-        val moshi = Moshi.Builder().build()
-        val jsonAdapter = moshi.adapter(GoogleUserModel::class.java).lenient()
-        val userJson = jsonAdapter.toJson(user)
-
-        navController.navigate(Destinations.Home.replace("{user}", userJson))
+            navController.navigate(route = Destinations.Home.replace("{user}", userJson)) {
+                popUpTo(route = Destinations.Auth) {
+                    inclusive = true
+                }
+            }
+        }
     }
 }
 
