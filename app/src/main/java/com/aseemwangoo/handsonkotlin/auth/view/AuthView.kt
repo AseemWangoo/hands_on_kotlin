@@ -26,8 +26,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.aseemwangoo.handsonkotlin.R
+import com.aseemwangoo.handsonkotlin.destinations.HomeViewDestination
 import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
 import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModel
@@ -36,11 +36,17 @@ import com.aseemwangoo.handsonkotlin.shared.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.ui.components.loader.FullScreenLoaderComponent
 import com.aseemwangoo.handsonkotlin.ui.components.signingoogle.SignInGoogleButton
 import com.google.android.gms.common.api.ApiException
-import com.squareup.moshi.Moshi
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import timber.log.Timber
 
+@Destination(
+    start = true
+)
 @Composable
-fun AuthScreen(navController: NavController) {
+fun AuthScreen(
+    navController: DestinationsNavigator,
+) {
     val signInRequestCode = 1
     val context = LocalContext.current
 
@@ -78,11 +84,14 @@ fun AuthScreen(navController: NavController) {
         LaunchedEffect(key1 = Unit) {
             mSignInViewModel.hideLoading()
 
-            val moshi = Moshi.Builder().build()
-            val jsonAdapter = moshi.adapter(GoogleUserModel::class.java).lenient()
-            val userJson = jsonAdapter.toJson(user)
-
-            navController.navigate(route = Destinations.Home.replace("{user}", userJson)) {
+            navController.navigate(
+                HomeViewDestination(
+                    GoogleUserModel(
+                        email = user?.email,
+                        name = user?.name,
+                    )
+                )
+            ) {
                 popUpTo(route = Destinations.Auth) {
                     inclusive = true
                 }

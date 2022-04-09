@@ -28,23 +28,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import androidx.work.WorkInfo
 import com.aseemwangoo.handsonkotlin.ADD_TODO
 import com.aseemwangoo.handsonkotlin.TITLE_MAIN
 import com.aseemwangoo.handsonkotlin.database.TodoItem
 import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
+import com.aseemwangoo.handsonkotlin.destinations.AddTodoViewDestination
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
-import com.aseemwangoo.handsonkotlin.shared.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.ui.components.button.SimpleButtonComponent
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModel
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModelFactory
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import timber.log.Timber
 
+@Destination
 @Composable
 fun HomeView(
-    navController: NavController,
+    navController: DestinationsNavigator,
     userModel: GoogleUserModel,
 ) {
     val context = LocalContext.current
@@ -125,7 +127,7 @@ fun TodoList(
 
 @Composable
 private fun CustomCardState(
-    navController: NavController,
+    navController: DestinationsNavigator,
     mTodoViewModel: TodoViewModel
 ) {
     Column() {
@@ -134,7 +136,7 @@ private fun CustomCardState(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             SimpleButtonComponent(text = ADD_TODO, onClick = {
-                navController.navigate(Destinations.AddTodo)
+                navController.navigate(AddTodoViewDestination)
             })
             SimpleButtonComponent(text = "Clear all", onClick = {
                 mTodoViewModel.deleteAllTodos()

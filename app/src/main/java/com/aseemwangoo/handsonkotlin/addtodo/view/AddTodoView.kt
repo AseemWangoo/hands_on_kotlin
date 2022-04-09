@@ -20,7 +20,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
 import com.aseemwangoo.handsonkotlin.SAVE_TODO
 import com.aseemwangoo.handsonkotlin.TEST_INPUT_TAG
 import com.aseemwangoo.handsonkotlin.database.TodoItem
@@ -28,9 +27,12 @@ import com.aseemwangoo.handsonkotlin.database.TodoViewModel
 import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
 import com.aseemwangoo.handsonkotlin.ui.components.fab.FABComponent
 import com.aseemwangoo.handsonkotlin.ui.components.textfield.InputFieldComponent
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
+@Destination
 @Composable
-fun AddTodoView(navController: NavController) {
+fun AddTodoView(navController: DestinationsNavigator) {
     val inputViewModel = InputViewModel()
     val context = LocalContext.current
     val mTodoViewModel: TodoViewModel = viewModel(
