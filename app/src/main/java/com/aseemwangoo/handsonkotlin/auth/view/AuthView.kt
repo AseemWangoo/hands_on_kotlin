@@ -27,12 +27,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aseemwangoo.handsonkotlin.R
+import com.aseemwangoo.handsonkotlin.destinations.AuthScreenDestination
 import com.aseemwangoo.handsonkotlin.destinations.HomeViewDestination
 import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
 import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModel
 import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModelFactory
-import com.aseemwangoo.handsonkotlin.shared.destinations.Destinations
 import com.aseemwangoo.handsonkotlin.ui.components.loader.FullScreenLoaderComponent
 import com.aseemwangoo.handsonkotlin.ui.components.signingoogle.SignInGoogleButton
 import com.google.android.gms.common.api.ApiException
@@ -92,7 +92,7 @@ fun AuthScreen(
                     )
                 )
             ) {
-                popUpTo(route = Destinations.Auth) {
+                popUpTo(route = AuthScreenDestination.routeId) {
                     inclusive = true
                 }
             }
