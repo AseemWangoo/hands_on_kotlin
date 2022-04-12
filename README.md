@@ -37,7 +37,9 @@ Uses ViewModel to manage state and display the changes in the todos instantly
 
 ### Navigation
 
-Uses navigation composable for navigating between screens
+Uses compose destinations for navigating between screens
+
+- https://levelup.gitconnected.com/using-compose-destinations-67aa2c0be7fc
 
 ### WorkManager
 

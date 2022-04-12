@@ -8,31 +8,30 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import androidx.navigation.testing.TestNavHostController
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso
 import com.aseemwangoo.handsonkotlin.ADD_TODO
+import com.aseemwangoo.handsonkotlin.NavGraphs
 import com.aseemwangoo.handsonkotlin.SAVE_TODO
 import com.aseemwangoo.handsonkotlin.TEST_INPUT_TAG
 import com.aseemwangoo.handsonkotlin.TITLE_MAIN
 import com.aseemwangoo.handsonkotlin.addtodo.view.AddTodoView
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
 import com.aseemwangoo.handsonkotlin.home.view.HomeView
-import com.aseemwangoo.handsonkotlin.shared.navigation.NavigationComponent
+import com.aseemwangoo.handsonkotlin.navigation.DestinationsNavigatorImpl
+import com.ramcosta.composedestinations.DestinationsNavHost
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 class TodoComposeTest {
 
-    private lateinit var navController: TestNavHostController
+    private var navController = DestinationsNavigatorImpl()
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Before
     fun setUp() {
-        navController = TestNavHostController(ApplicationProvider.getApplicationContext())
     }
 
     @Test
@@ -71,7 +70,7 @@ class TodoComposeTest {
     @Test
     fun testForAddTodoClick() {
         composeTestRule.setContent {
-            NavigationComponent()
+            DestinationsNavHost(navGraph = NavGraphs.root)
         }
 
         composeTestRule.onNodeWithText(ADD_TODO)
@@ -85,7 +84,7 @@ class TodoComposeTest {
     @Test
     fun testForNotSavingTodo() {
         composeTestRule.setContent {
-            NavigationComponent()
+            DestinationsNavHost(navGraph = NavGraphs.root)
         }
 
         composeTestRule.onNodeWithText(ADD_TODO)
@@ -104,6 +103,7 @@ class TodoComposeTest {
     @Test
     fun testForTodoInputField() {
         composeTestRule.setContent {
+            DestinationsNavHost(navGraph = NavGraphs.root)
             AddTodoView(navController)
         }
         val dummyText = "Dummy Text"

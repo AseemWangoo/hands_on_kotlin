@@ -9,10 +9,11 @@ import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
-import androidx.navigation.testing.TestNavHostController
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.platform.app.InstrumentationRegistry
+import com.aseemwangoo.handsonkotlin.NavGraphs
 import com.aseemwangoo.handsonkotlin.addtodo.view.AddTodoView
+import com.aseemwangoo.handsonkotlin.navigation.DestinationsNavigatorImpl
+import com.ramcosta.composedestinations.DestinationsNavHost
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -20,19 +21,19 @@ import java.io.FileOutputStream
 
 class ScreenshotComparatorTest {
 
-    private lateinit var navController: TestNavHostController
+    private var navController = DestinationsNavigatorImpl()
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
     @Before
     fun setUp() {
-        navController = TestNavHostController(ApplicationProvider.getApplicationContext())
     }
 
     @Test
     fun testAddTodoScreen() {
         composeTestRule.setContent {
+            DestinationsNavHost(navGraph = NavGraphs.root)
             AddTodoView(navController)
         }
 
