@@ -14,7 +14,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -54,7 +54,7 @@ fun AuthScreen(
         factory = SignInGoogleViewModelFactory(context.applicationContext as Application)
     )
 
-    val state = mSignInViewModel.googleUser.observeAsState()
+    val state = mSignInViewModel.googleUser.collectAsState()
     val user = state.value
 
     val isError = rememberSaveable { mutableStateOf(false) }
@@ -65,7 +65,7 @@ fun AuthScreen(
                 val gsa = task?.getResult(ApiException::class.java)
 
                 if (gsa != null) {
-                    mSignInViewModel.fetchSignInUser(gsa.email, gsa.displayName)
+                    mSignInViewModel.fetchSignInUser(gsa)
                 } else {
                     isError.value = true
                 }
@@ -79,16 +79,16 @@ fun AuthScreen(
         isError = isError.value,
         mSignInViewModel
     )
-    // Strange issue after upgrading to latest version
-    if (mSignInViewModel.googleUser.value != null) {
+
+    if (user.email != null && user.name != null) {
         LaunchedEffect(key1 = Unit) {
             mSignInViewModel.hideLoading()
 
             navController.navigate(
                 HomeViewDestination(
                     GoogleUserModel(
-                        email = user?.email,
-                        name = user?.name,
+                        email = user.email,
+                        name = user.name,
                     )
                 )
             ) {
@@ -106,11 +106,11 @@ private fun AuthView(
     isError: Boolean = false,
     mSignInViewModel: SignInGoogleViewModel
 ) {
-    val state = mSignInViewModel.loading.observeAsState()
+    val state = mSignInViewModel.loading.collectAsState()
     val isLoading = state.value
 
     Scaffold {
-        if (isLoading == true && !isError) {
+        if (isLoading && !isError) {
             FullScreenLoaderComponent()
         } else {
             Column(

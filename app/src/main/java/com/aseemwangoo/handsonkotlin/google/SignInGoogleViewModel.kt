@@ -3,32 +3,38 @@ package com.aseemwangoo.handsonkotlin.google
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class SignInGoogleViewModel(application: Application) : AndroidViewModel(application) {
-    private var _userState = MutableLiveData<GoogleUserModel>()
-    val googleUser: LiveData<GoogleUserModel> = _userState
+class SignInGoogleViewModel(
+    application: Application
+) : AndroidViewModel(application) {
 
-    private var _loadingState = MutableLiveData(false)
-    val loading: LiveData<Boolean> = _loadingState
+    private var _userState = MutableStateFlow(GoogleUserModel())
+    val googleUser: StateFlow<GoogleUserModel> = _userState
+
+    private var _loadingState = MutableStateFlow(false)
+    val loading: StateFlow<Boolean> = _loadingState
 
     init {
         checkSignedInUser(application.applicationContext)
     }
 
-    fun fetchSignInUser(email: String?, name: String?) {
+    fun fetchSignInUser(gsa: GoogleSignInAccount) {
         _loadingState.value = true
 
+        val currModel = _userState.value
+
         viewModelScope.launch {
-            _userState.value = GoogleUserModel(
-                email = email,
-                name = name,
+            _userState.value = currModel.copy(
+                email = gsa.email,
+                name = gsa.displayName,
             )
         }
 

@@ -5,6 +5,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class GoogleUserModel(
-    val name: String?,
-    val email: String?
+    val name: String? = null,
+    val email: String? = null
 ) : Parcelable
