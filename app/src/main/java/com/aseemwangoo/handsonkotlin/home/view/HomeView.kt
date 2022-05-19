@@ -1,31 +1,23 @@
 package com.aseemwangoo.handsonkotlin.home.view
 
 import android.app.Application
-import android.widget.Toast
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Checkbox
-import androidx.compose.material.Divider
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.ListItem
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.work.WorkInfo
@@ -37,6 +29,8 @@ import com.aseemwangoo.handsonkotlin.database.TodoViewModelFactory
 import com.aseemwangoo.handsonkotlin.destinations.AddTodoViewDestination
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
 import com.aseemwangoo.handsonkotlin.ui.components.button.SimpleButtonComponent
+import com.aseemwangoo.handsonkotlin.ui.components.card.TodoCardComponent
+import com.aseemwangoo.handsonkotlin.ui.theme.AppTheme
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModel
 import com.aseemwangoo.handsonkotlin.workers.OnDemandBackupViewModelFactory
 import com.ramcosta.composedestinations.annotation.Destination
@@ -77,18 +71,22 @@ fun HomeView(
         )
         Spacer(modifier = Modifier.padding(bottom = 16.dp))
         CustomCardState(navController, mTodoViewModel)
-        TodoList(list = items, mTodoViewModel = mTodoViewModel)
+//        TodoList(todoTasks = items, mTodoViewModel = mTodoViewModel)
+        TodoList(
+            todoTasks = items,
+            onDoneClicked = {},
+        )
         Spacer(modifier = Modifier.padding(top = 32.dp))
         BackupOptions(mBackUpViewModel)
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+/*@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TodoList(
     list: List<TodoItem>,
     mTodoViewModel: TodoViewModel
-) {
+) {f
     val context = LocalContext.current
 
     LazyColumn() {
@@ -122,6 +120,49 @@ fun TodoList(
             )
             Divider()
         }
+    }
+}*/
+
+@Composable
+fun TodoList(
+    todoTasks: List<TodoItem>,
+    onDoneClicked: (TodoItem) -> Unit,
+) {
+    LazyColumn(
+        contentPadding = PaddingValues(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        items(todoTasks) { task ->
+            TodoCardComponent(
+                task = task,
+                onDoneClicked = onDoneClicked,
+            )
+        }
+    }
+}
+
+@Preview(
+    name = "Night Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Preview(
+    name = "Day Mode",
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
+@Suppress("UnusedPrivateMember")
+@Composable
+private fun TodoListPreview() {
+    @Suppress("MagicNumber")
+    val todoTasks = (1..10).map { index ->
+        TodoItem(
+            itemName = "Task $index"
+        )
+    }
+    AppTheme {
+        TodoList(
+            todoTasks = todoTasks,
+            onDoneClicked = {},
+        )
     }
 }
 

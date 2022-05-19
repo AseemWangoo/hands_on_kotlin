@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.aseemwangoo.handsonkotlin.R
 import com.aseemwangoo.handsonkotlin.destinations.AuthScreenDestination
-import com.aseemwangoo.handsonkotlin.destinations.HomeViewDestination
+import com.aseemwangoo.handsonkotlin.destinations.HomeScreenDestination
 import com.aseemwangoo.handsonkotlin.google.GoogleApiContract
 import com.aseemwangoo.handsonkotlin.google.GoogleUserModel
 import com.aseemwangoo.handsonkotlin.google.SignInGoogleViewModel
@@ -85,7 +85,7 @@ fun AuthScreen(
             mSignInViewModel.hideLoading()
 
             navController.navigate(
-                HomeViewDestination(
+                HomeScreenDestination(
                     GoogleUserModel(
                         email = user.email,
                         name = user.name,

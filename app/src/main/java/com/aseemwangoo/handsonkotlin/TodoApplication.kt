@@ -9,9 +9,11 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.aseemwangoo.handsonkotlin.workers.PeriodicBackupWorker
+import dagger.hilt.android.HiltAndroidApp
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
+@HiltAndroidApp
 class TodoApplication : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()

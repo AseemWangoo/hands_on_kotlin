@@ -31,6 +31,10 @@ ext {
             // https://developer.android.com/jetpack/androidx/releases/test
             espresso           : "3.4.0",
             // https://github.com/raamcosta/compose-destinations/releases
-            composeDestinations: "1.4.2-beta"
+            composeDestinations: "1.4.2-beta",
+            // https://developer.android.com/jetpack/androidx/releases/hilt
+            hilt               : "2.38.1",
+            // https://developer.android.com/jetpack/androidx/releases/hilt
+            hiltNavigationCompose: "1.0.0",
     ]
 }

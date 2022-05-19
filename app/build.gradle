@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'com.google.devtools.ksp' version '1.6.10-1.0.2'
     id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
 }
 
 // FOR COMPOSE DESTINATION
@@ -85,8 +86,8 @@ dependencies {
     // END FOR ROOM
 
     // MOSHI
-    implementation "com.squareup.moshi:moshi:$rootProject.ext.versions.moshi"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.ext.versions.moshi"
+//    implementation "com.squareup.moshi:moshi:$rootProject.ext.versions.moshi"
+//    kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.ext.versions.moshi"
     // END FOR MOSHI
 
     // FOR NAVIGATION
@@ -106,6 +107,12 @@ dependencies {
     // SIGN IN WITH GOOGLE
     implementation "com.google.android.gms:play-services-auth:$rootProject.ext.versions.playServices"
     // END FOR SIGN IN WITH GOOGLE
+
+    // FOR HILT
+    implementation "com.google.dagger:hilt-android:$rootProject.ext.versions.hilt"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.ext.versions.hilt"
+    implementation "androidx.hilt:hilt-navigation-compose:$rootProject.ext.versions.hiltNavigationCompose"
+    // END FOR HILT
 
     testImplementation "junit:junit:$rootProject.ext.versions.junit"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.versions.androidxTestJunit"
